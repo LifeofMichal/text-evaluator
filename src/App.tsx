@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react'
+import './App.css'
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import InputField from './FormFields/InputField'
+import Button from './FormFields/Button'
+import OutputField from './FormFields/OutputField'
+
+interface appState {
+  inputText: string,
+  outputText: string
 }
 
-export default App;
+class App extends Component <{}, appState> {
+
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      inputText: "",
+      outputText: ""
+    }
+  }
+
+  handleChange = (event: any) => {
+    const { value } = event.target
+
+    this.setState({
+      inputText: value
+    })
+  }
+
+  handleClick = () => {
+    this.setState({
+      outputText: this.state.inputText
+    })
+  }
+
+  render () {
+    return (
+      <div className="App">
+        <InputField handler={this.handleChange} inputText={this.state.inputText}/>
+        <div>
+          <Button handler={this.handleClick}/>
+          <OutputField outputText={this.state.outputText}/>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default App
